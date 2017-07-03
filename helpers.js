@@ -9,6 +9,6 @@ module.exports = {
 	getFilePath : file => {
 		let env = process.env.NODE_ENV || 'dev';
 		let dir = config[env]['views'];
-		return dir + file;
+		return dir + "spiral/dist/" + file;
 	}
 }

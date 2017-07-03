@@ -11,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.5.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "express-authentication": "^0.3.2",
+    "jsonwebtoken": "^7.4.1",
     "mongodb": "^2.2.29",
     "mongoose": "^4.11.1",
     "nodemon": "^1.11.0",

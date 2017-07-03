@@ -11,7 +11,10 @@ module.exports = () => {
 			type: String,
 			id: Schema.ObjectId
 		}
-		content: String
+		content: String,
+		time: String,
+		agent: String,
+		ip: String
 	});
 	mongoose.model('Message', MessageSchema);
 }
