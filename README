@@ -1,0 +1,15 @@
+Adrian Cosma
+
+Spiral Messenger is a messaging platform done entirely in javascript.
+Express with MongoDB in the backend and a VueJS Progressive Web-App in the frontend.
+
+It provides real-time message sending, group-conversations, file sending and more.
+Be sure to check it out!
+
+
+Installation
+	# On the server run
+	node server.js
+	# And
+	npm run build
+
