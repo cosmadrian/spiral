@@ -7,9 +7,9 @@ It provides real-time message sending, group-conversations, file sending and mor
 Be sure to check it out!
 
 
-Installation
-	# On the server run
+Installation:
+	# To start the server
 	node server.js
-	# And
-	npm run build
+	# To build frontend
+	cd views/spiral/ && npm run build
 
