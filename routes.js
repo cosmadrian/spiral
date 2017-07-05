@@ -10,6 +10,9 @@ authentication = require('express-authentication'),
 
 		app => app.post('/api/register', UserController.register),
 		app => app.post('/api/login', UserController.login),
+		app => app.get('/api/test', (req, res) => {
+			res.json({a:1});
+		}),
 
 		// should be guarded
 		app => app.get('/api/conversations', authentication.required(), ConversationController.index),

@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 let express = require('express')
+cors = require('cors');
 let app = express();
 
 let server = require('http').Server(app);
@@ -8,9 +9,10 @@ let io = require('socketio-jwt');
 let helpers = require('./helpers');
 let routes = require('./routes');
 
+// TODO
 app.use((req, res, next) => {
 	req.challenge = req.headers['authorization'];
-	req.authenticated = req.headers['authorization'] === 'secret';
+	req.authenticated = true
 
 	if (req.authenticated) {
 		req.authentication = 'fancyuser';
@@ -18,8 +20,7 @@ app.use((req, res, next) => {
 	next()
 });
 
-
-console.log(helpers.getFilePath('static/css'))
+app.use(cors());
 
 app.use('/static', express.static(helpers.getFilePath('static/')))
 app.use('/service-worker.js', express.static(helpers.getFilePath('service-worker.js')))
