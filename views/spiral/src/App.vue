@@ -19,6 +19,8 @@ export default {
   	UserService.isLoggedIn().then((result) => {
       if(!result) {
         console.log("User is not logged in.");
+      } else {
+        console.log("User is logged in.")
       }
     })
   },

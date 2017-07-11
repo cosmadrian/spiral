@@ -2,18 +2,13 @@ let SiteController = require('./controllers/SiteController');
 let UserController = require('./controllers/UserController');
 let ConversationController = require('./controllers/ConversationController')
 
-authentication = require('express-authentication'),
+module.exports = [
+	app => app.get('/', SiteController.index),
+	app => app.get('/index.html', SiteController.index),
 
-	module.exports = [
-		app => app.get('/', SiteController.index),
-		app => app.get('/index.html', SiteController.index),
+	app => app.post('/api/register', UserController.register),
+	app => app.post('/api/login', UserController.login),
 
-		app => app.post('/api/register', UserController.register),
-		app => app.post('/api/login', UserController.login),
-		app => app.get('/api/test', (req, res) => {
-			res.json({a:1});
-		}),
-
-		// should be guarded
-		app => app.get('/api/conversations', authentication.required(), ConversationController.index),
-	]
+	// should be guarded
+	app => app.get('/api/conversations', ConversationController.index),
+]

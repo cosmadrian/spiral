@@ -155,6 +155,11 @@
 </span></template>
 
 <script>
+// TODO better validation
+// better error messages
+// inputs color change
+// buttons with loading, and disabled while request is in progress
+
 import UserService from '../UserService'
 
 export default {
@@ -194,13 +199,16 @@ export default {
 				this.errorMessage = validation;
 				return;
 			}
-			UserService.register(this.register_credentials.nickname, this.register_credentials.password)
+			UserService.register(this.register_credentials.nickname,
+				this.register_credentials.password,
+				this.register_credentials.confirm_password)
 			.then(() => {
 				console.log('registerd');
 			}).catch((error) => {
 				this.errorMessage = error;
 			})
 		},
+		// TODO
 		validate(credentials) {
 			if(!credentials.nickname) return "Nickname cannot be empty.";
 			if(!credentials.password) return "Password cannot be empty.";
