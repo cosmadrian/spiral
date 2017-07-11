@@ -10,7 +10,7 @@ module.exports = () => {
 		destination: {
 			type: String,
 			id: Schema.ObjectId
-		}
+		},
 		content: String,
 		time: String,
 		agent: String,

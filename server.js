@@ -1,15 +1,20 @@
-let mongoose = require('mongoose');
 let express = require('express')
-cors = require('cors');
+let cors = require('cors');
 let app = express();
+let bodyParser = require('body-parser')
 
 let server = require('http').Server(app);
 let io = require('socketio-jwt');
 
+let mongoose = require('mongoose');
+require('./models/message.js')();
+require('./models/user.js')();
+require('./models/group.js')();
+
 let helpers = require('./helpers');
 let routes = require('./routes');
 
-// TODO
+// TODO, check authorization
 app.use((req, res, next) => {
 	req.challenge = req.headers['authorization'];
 	req.authenticated = true
@@ -21,6 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors());
+app.use(bodyParser.json())
 
 app.use('/static', express.static(helpers.getFilePath('static/')))
 app.use('/service-worker.js', express.static(helpers.getFilePath('service-worker.js')))

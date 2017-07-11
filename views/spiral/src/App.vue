@@ -17,7 +17,7 @@ export default {
   },
   mounted() {
   	UserService.isLoggedIn().then((result) => {
-      if(result) {
+      if(!result) {
         console.log("User is not logged in.");
       }
     })

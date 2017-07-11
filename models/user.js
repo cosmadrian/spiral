@@ -1,7 +1,7 @@
 let mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
-module.exports = () => {
+module.exports = function() {
 	let UserSchema = new Schema({
 		nickname: String,
 		password: String,
@@ -12,4 +12,4 @@ module.exports = () => {
 		}]
 	});
 	mongoose.model('User', UserSchema)
-}
+};
