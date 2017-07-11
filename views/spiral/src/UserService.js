@@ -49,12 +49,5 @@ export default new Vue({
 				.then(result => result.json().then(body => this.setToken(body.jwt)))
 				.catch(error => error.json().then(body => Promise.reject(body.error)))
 		},
-
-		test_req() {
-			return this.$http.get('notpula');
-		},
-		test_req2() {
-			return this.$http.get('pula');
-		}
 	}
 });
