@@ -12,9 +12,3 @@ Installation:
 	node server.js
 	# To build frontend
 	cd views/spiral/ && npm run build
-
-
-TODO:
-	[] validate inputs
-	[] register users
-	[] generate jwt tokens
