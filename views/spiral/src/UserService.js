@@ -5,7 +5,8 @@ export default new Vue({
 	data() {
 		return {
 			loggedIn: false,
-			jwt: ""
+			jwt: "",
+			user: {}
 		}
 	},
 
@@ -36,12 +37,23 @@ export default new Vue({
 			});
 		},
 
+		logout() {
+			return localforage.removeItem('jwt').then(() => {
+				this.jwt = null
+				this.loggedIn = false
+				delete Vue.http.headers.common['Authorization']
+				return Promise.resolve("You have been logged out.")
+			}).catch(error => {
+				return Promise.reject(error)
+			})
+		},
+
 		login(nickname, password) {
-			return this.authenticate({nickname, password}, 'login')
+			return this.authenticate({nickname, password}, 'user/login')
 		},
 
 		register(nickname, password, confirm_password) {
-			return this.authenticate({nickname, password}, 'register')
+			return this.authenticate({nickname, password}, 'user/register')
 		},
 
 		authenticate(credentials, route){
@@ -49,5 +61,16 @@ export default new Vue({
 				.then(result => result.json().then(body => this.setToken(body.jwt)))
 				.catch(error => error.json().then(body => Promise.reject(body.error)))
 		},
+
+		getUserData() {
+			return this.$http.get("user/data")
+				.then(result => result.json().then(body => {
+					this.user = body
+					return Promise.resolve
+				}))
+				.catch(error => error.json().then(body => {
+					return Promise.reject(body)
+				}))
+		}
 	}
 });

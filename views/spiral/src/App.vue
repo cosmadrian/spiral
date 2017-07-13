@@ -1,6 +1,9 @@
 <template><span>
-    <router-view v-if="loggedIn"></router-view>
-    <login v-else/>
+    <div v-if="!loading">
+      <router-view v-if="loggedIn"></router-view>
+      <login v-else/>
+    </div>
+    <div v-else><div class="custom-loader"></div></div>
 
 </span></template>
 
@@ -13,14 +16,21 @@ export default {
   components: { Login },
   data() {
   	return {
+      loading: false
   	}
   },
   mounted() {
+    this.loading = true;
   	UserService.isLoggedIn().then((result) => {
       if(!result) {
-        console.log("User is not logged in.");
+        this.loading = false
       } else {
-        console.log("User is logged in.")
+        UserService.getUserData().then(() => {
+          this.loading = false;
+        }).catch(error => {
+          this.loading = false;
+          console.log(error)
+        })
       }
     })
   },

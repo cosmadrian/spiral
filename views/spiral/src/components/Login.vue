@@ -54,7 +54,6 @@
 						    <input
 						    	v-model="login_credentials.nickname"
 						    	v-validate="{rules: {required: true}}"
-						    	data-vv-delay="1000"
 						    	v-bind:class="{
 							    		'input':true,
 							    		'is-success': !errors.has('login nickname'),
@@ -79,7 +78,6 @@
 						  <p class="control">
 						    <input
 						    	v-model="login_credentials.password"
-						    	data-vv-delay="1000"
 						    	v-bind:class="{
 							    		'input': true,
 							    		'is-success': !errors.has('login password'),
@@ -127,7 +125,6 @@
 					    <input
 					    v-model="register_credentials.nickname"
 					    v-validate="{rules: {required: true}}"
-					    data-vv-delay="1000"
 					    v-bind:class="{
 						    	'input': true,
 						    	'is-success': !errors.has('register nickname'),
@@ -158,7 +155,6 @@
 						    		'is-danger': errors.has('register password')
 					    		}"
 					    	v-validate="{rules: {required: true, min: 6}}"
-					    	data-vv-delay="1000"
 					    	name="register password"
 					    	type="password"
 					    	placeholder="At least 6 characters">
@@ -178,7 +174,6 @@
 					  <p class="control ">
 					    <input
 					    	v-model="register_credentials.confirm_password"
-					    	data-vv-delay="1000"
 					    	v-bind:class="{
 						    		'input': true,
 						    		'is-success': !errors.has('confirm register password'),
