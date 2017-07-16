@@ -15,10 +15,11 @@ module.exports = {
 			if(docs) {
 				return res.status(401).json({'error': 'Nickname is already in use. Try another one.'});
 			}
-			bcrypt.hash(req.body.password, helpers.getConfig('password_salt', 'shared'), null, (err, hash) => {
+			bcrypt.hash(req.body.password, null, null, (err, hash) => {
 				let newUser = User()
 				newUser.nickname = req.body.nickname
 				newUser.password = hash
+				newUser.status = "Wandering about."
 				newUser.save()
 
 				jwt.sign({ user: newUser },
@@ -45,7 +46,7 @@ module.exports = {
 				if (!result)
 					return res.status(401).json({"error": "Username or password is not valid."})
 
-				jwt.sign({ nickname }, helpers.getConfig('private_key', 'shared'),
+				jwt.sign({ user: docs }, helpers.getConfig('private_key', 'shared'),
 				 { expiresIn: helpers.getConfig('token_expire','shared') },
 				 (err, token) => {
 					if(err)
@@ -56,5 +57,12 @@ module.exports = {
 				})
 			});
 		})
+	},
+
+	user: (req, res) => {
+		let user = JSON.parse(JSON.stringify(req.authentication.user));
+		delete user['password']
+		delete user['_id']
+		return res.json(user)
 	}
 };

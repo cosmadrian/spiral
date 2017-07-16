@@ -242,11 +242,11 @@ export default {
 			this.loginIsLoading = true
 
 			UserService.login(this.login_credentials.nickname, this.login_credentials.password)
-			.then(() => {
-				this.loginIsLoading = false
-			}).catch((error) => {
-				this.loginIsLoading = false
+			.then(() => Promise.resolve).catch((error) => {
 				this.errorMessage = error;
+				return Promise.resolve
+			}).then(() => {
+				this.loginIsLoading = false
 			})
 		},
 
@@ -263,11 +263,11 @@ export default {
 			UserService.register(this.register_credentials.nickname,
 				this.register_credentials.password,
 				this.register_credentials.confirm_password)
-			.then(() => {
-				this.registerIsLoading = false
-			}).catch((error) => {
-				this.registerIsLoading = false
+			.then(() => Promise.resolve).catch((error) => {
 				this.errorMessage = error;
+				return Promise.resolve
+			}).then(() => {
+				this.registerIsLoading = false
 			})
 		},
 	},

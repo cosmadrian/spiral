@@ -9,6 +9,9 @@ module.exports = () => {
 		conversations: [{
 			type: String,
 			id: Schema.ObjectId
+		}],
+		contacts: [{
+			id: Schema.ObjectId
 		}]
 	});
 	mongoose.model('User', UserSchema)

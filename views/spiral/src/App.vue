@@ -16,30 +16,20 @@ export default {
   components: { Login },
   data() {
   	return {
-      loading: false
+      loading: false,
+      loggedIn: false
   	}
   },
   mounted() {
     this.loading = true;
-  	UserService.isLoggedIn().then((result) => {
-      if(!result) {
-        this.loading = false
-      } else {
-        UserService.getUserData().then(() => {
-          this.loading = false;
-        }).catch(error => {
-          this.loading = false;
-          console.log(error)
-        })
-      }
+    UserService.checkLogin()
+
+    UserService.$on("login", result => {
+      this.loggedIn = result
+      this.loading = false
     })
   },
   methods: {},
-  computed: {
-    loggedIn() {
-      return UserService.loggedIn;
-    }
-  }
 }
 </script>
 

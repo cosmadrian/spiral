@@ -2,12 +2,24 @@
 	<div class="section">
 		<div class="columns">
 			<div class="column">
-				<h1 class="title">
-				   <span class="icon is-medium">
-				   	<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
-				   </span>
-				   	Spiral Messenger - {{ user.nickname }}
-			  </h1>
+				<div class="columns">
+					<div class="column">
+						<h1 class="title">
+						   <span class="icon is-medium">
+						   		<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+						   </span>
+						   Spiral Messenger
+						    <span v-if="!loading"> - <strong>{{ user.nickname }}</strong></span>
+					  	</h1>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-offset-2">
+					  	<h2 class="subtitle">
+						   <span>Your status: <strong>{{user.status}} </strong></span>
+					  	</h2>
+					</div>
+				</div>
 			</div>
 			<div class="column">
 				<button class="button is-success is-pulled-right" v-on:click="logout()">Log Out</button>
@@ -25,8 +37,8 @@
 	  <div class="tile is-parent">
 	    <article class="tile is-child notification">
 	      <div class="content">
-	        <p class="title">Online Users</p>
-	        <p class="subtitle">Here are the currently online users of Spiral.</p>
+	        <p class="title">Online Contacts</p>
+	        <p class="subtitle is-hidden-mobile">Here are the currently online contacts of your Spiral account.</p>
 	        <div class="content">
 	          <!-- Content -->
 	        </div>
@@ -44,10 +56,15 @@ export default {
 	name: 'dashboard',
 	data() {
 		return {
-			message: ""
+			loading: true,
+			message: "",
+			user: {}
 		}
 	},
+
 	mounted() {
+		this.user = UserService.user
+		this.loading = false
 	},
 
 	methods: {
@@ -58,19 +75,7 @@ export default {
 				console.log(error)
 			})
 		},
-		test() {
-			this.$http.get('conversations').then(r => {
-				console.log('x');
-			}).catch(e => {
-				console.log('xxx');
-			})
-		}
 	},
-	computed: {
-		user() {
-			return UserService.user;
-		}
-	}
 }
 </script>
 
