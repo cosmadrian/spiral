@@ -39,7 +39,7 @@ module.exports = {
 			let nickname = req.body.nickname;
 
 			bcrypt.compare(req.body.password, userModel.password, (err, result) => {
-				if (!result) res.status(401).json({"error": "Username or password is not valid."})
+				if (!result) return res.status(401).json({"error": "Username or password is not valid."})
 				signJWT({user: userModel}, token => res.json({'jwt': token}), err => res.status(500).json(err))
 			});
 		})

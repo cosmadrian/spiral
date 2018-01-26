@@ -1,0 +1,11 @@
+private_key.pem
+public_key.pem
+
+public_key_token.pem
+private_key_token.pem
+
+node_modules/
+views/spiral/node_modules/
+npm-debug.log
+
+views/spiral/dist/

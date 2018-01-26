@@ -28,69 +28,165 @@
 			</div>
 		</div>
 	</section>
-
-	<div class="columns" v-if="errorMessage">
-		<div class="column is-4 is-offset-4">
-			<article class="message is-danger">
-			  <div class="message-body">
-			  {{errorMessage}}
-			  </div>
-			</article>
-		</div>
-	</div>
-	<div class="columns">
-		<div class="column is-4 is-offset-2 box">
-		<section>
-			<div class="columns">
-				<div class="column">
-					<h1 class="title">Log In</h1>
-				</div>
+	<div class='container'>
+		<div class="columns" v-if="errorMessage">
+			<div class="column is-4 is-offset-4">
+				<article class="message is-danger">
+				  <div class="message-body">
+				  {{errorMessage}}
+				  </div>
+				</article>
 			</div>
+		</div>
+		<div class="columns">
+			<div class="column is-4 is-offset-2 box">
+			<section>
+				<div class="columns">
+					<div class="column">
+						<h1 class="title">Log In</h1>
+					</div>
+				</div>
+					<div class="columns">
+						<div class="column ">
+							<div class="field">
+							  <label class="label">Nickname</label>
+							  <p class="control">
+							    <input
+							    	v-model="login_credentials.nickname"
+							    	v-validate="{rules: {required: true}}"
+							    	v-bind:class="{
+								    		'input':true,
+								    		'is-success': !errors.has('login nickname'),
+								    		'is-danger': errors.has('login nickname')
+							    		}"
+							    	name="login nickname"
+							    	type="text"
+							    	placeholder="e.g. JonDoe">
+							    	 <span
+								    	v-show="errors.has('login nickname')"
+								    	class="help is-danger">
+								    		{{ errors.first('login nickname') }}
+								    </span>
+							  </p>
+							</div>
+						</div>
+					</div>
+					<div class="columns">
+						<div class="column">
+							<div class="field">
+							  <label class="label">Password</label>
+							  <p class="control">
+							    <input
+							    	v-model="login_credentials.password"
+							    	v-bind:class="{
+								    		'input': true,
+								    		'is-success': !errors.has('login password'),
+								    		'is-danger': errors.has('login password')
+							    		}"
+							    	v-validate="{rules: {required: true, min: 6}}"
+							    	name="login password"
+							    	type="password"
+							    	placeholder="At least 6 characters.">
+							    	 <span
+								    	v-show="errors.has('login password')"
+								    	class="help is-danger">
+								    		{{ errors.first('login password') }}
+								    </span>
+							  </p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="columns">
+						<div class="column">
+							<button
+								v-on:click="login()"
+								v-bind:class="{'button is-success': true, 'is-loading': loginIsLoading}"
+								v-bind:disabled="loginIsDisabled">
+							Log In
+							</button>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="column is-4 box">
+			<section>
+				<div class="columns">
+					<div class="column ">
+						<h1 class="title">Register</h1>
+					</div>
+				</div>
 				<div class="columns">
 					<div class="column ">
 						<div class="field">
-						  <label class="label">Nickname</label>
-						  <p class="control">
+						  <label class="label">Desired Nickname</label>
+						  <p class="control ">
 						    <input
-						    	v-model="login_credentials.nickname"
-						    	v-validate="{rules: {required: true}}"
+						    v-model="register_credentials.nickname"
+						    v-validate="{rules: {required: true}}"
+						    v-bind:class="{
+							    	'input': true,
+							    	'is-success': !errors.has('register nickname'),
+						    	 	'is-danger': errors.has('register nickname')
+						    	 }"
+						    type="text"
+						    name="register nickname"
+						    placeholder="e.g. JonDoe1337">
+						    <span
+						    	v-show="errors.has('register nickname')"
+						    	class="help is-danger">
+						    		{{ errors.first('register nickname') }}
+						    </span>
+						  </p>
+						</div>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column ">
+						<div class="field">
+						  <label class="label">Desired Password</label>
+						  <p class="control ">
+						    <input
+						    	v-model="register_credentials.password"
 						    	v-bind:class="{
-							    		'input':true,
-							    		'is-success': !errors.has('login nickname'),
-							    		'is-danger': errors.has('login nickname')
+							    		'input': true,
+							    		'is-success': !errors.has('register password'),
+							    		'is-danger': errors.has('register password')
 						    		}"
-						    	name="login nickname"
-						    	type="text"
-						    	placeholder="e.g. JonDoe">
-						    	 <span
-							    	v-show="errors.has('login nickname')"
+						    	v-validate="{rules: {required: true, min: 6}}"
+						    	name="register password"
+						    	type="password"
+						    	placeholder="At least 6 characters">
+						    	<span
+							    	v-show="errors.has('register password')"
 							    	class="help is-danger">
-							    		{{ errors.first('login nickname') }}
+							    		{{ errors.first('register password') }}
 							    </span>
 						  </p>
 						</div>
 					</div>
 				</div>
 				<div class="columns">
-					<div class="column">
+					<div class="column ">
 						<div class="field">
-						  <label class="label">Password</label>
-						  <p class="control">
+						  <label class="label">Confirm password</label>
+						  <p class="control ">
 						    <input
-						    	v-model="login_credentials.password"
+						    	v-model="register_credentials.confirm_password"
 						    	v-bind:class="{
 							    		'input': true,
-							    		'is-success': !errors.has('login password'),
-							    		'is-danger': errors.has('login password')
+							    		'is-success': !errors.has('confirm register password'),
+							    		'is-danger': errors.has('confirm register password')
 						    		}"
-						    	v-validate="{rules: {required: true, min: 6}}"
-						    	name="login password"
+						    	v-validate="{rules: {required: true, min: 6, confirmed: 'register password'}}"
+						    	name="confirm register password"
 						    	type="password"
-						    	placeholder="At least 6 characters.">
-						    	 <span
-							    	v-show="errors.has('login password')"
+						    	placeholder="Still at least 6 characters">
+						    	<span
+							    	v-show="errors.has('confirm register password')"
 							    	class="help is-danger">
-							    		{{ errors.first('login password') }}
+							    		{{ errors.first('confirm register password') }}
 							    </span>
 						  </p>
 						</div>
@@ -99,114 +195,20 @@
 			</section>
 			<section>
 				<div class="columns">
-					<div class="column">
+					<div class="column is-offset-9">
 						<button
-							v-on:click="login()"
-							v-bind:class="{'button is-success': true, 'is-loading': loginIsLoading}"
-							v-bind:disabled="loginIsDisabled">
-						Log In
-						</button>
+								v-on:click="register()"
+								v-bind:class="{'button is-success' : true, 'is-loading': registerIsLoading}"
+								v-bind:disabled="registerIsDisabled">
+							Register
+							</button>
 					</div>
 				</div>
 			</section>
-		</div>
-		<div class="column is-4 box">
-		<section>
-			<div class="columns">
-				<div class="column ">
-					<h1 class="title">Register</h1>
-				</div>
 			</div>
-			<div class="columns">
-				<div class="column ">
-					<div class="field">
-					  <label class="label">Desired Nickname</label>
-					  <p class="control ">
-					    <input
-					    v-model="register_credentials.nickname"
-					    v-validate="{rules: {required: true}}"
-					    v-bind:class="{
-						    	'input': true,
-						    	'is-success': !errors.has('register nickname'),
-					    	 	'is-danger': errors.has('register nickname')
-					    	 }"
-					    type="text"
-					    name="register nickname"
-					    placeholder="e.g. JonDoe1337">
-					    <span
-					    	v-show="errors.has('register nickname')"
-					    	class="help is-danger">
-					    		{{ errors.first('register nickname') }}
-					    </span>
-					  </p>
-					</div>
-				</div>
-			</div>
-			<div class="columns">
-				<div class="column ">
-					<div class="field">
-					  <label class="label">Desired Password</label>
-					  <p class="control ">
-					    <input
-					    	v-model="register_credentials.password"
-					    	v-bind:class="{
-						    		'input': true,
-						    		'is-success': !errors.has('register password'),
-						    		'is-danger': errors.has('register password')
-					    		}"
-					    	v-validate="{rules: {required: true, min: 6}}"
-					    	name="register password"
-					    	type="password"
-					    	placeholder="At least 6 characters">
-					    	<span
-						    	v-show="errors.has('register password')"
-						    	class="help is-danger">
-						    		{{ errors.first('register password') }}
-						    </span>
-					  </p>
-					</div>
-				</div>
-			</div>
-			<div class="columns">
-				<div class="column ">
-					<div class="field">
-					  <label class="label">Confirm password</label>
-					  <p class="control ">
-					    <input
-					    	v-model="register_credentials.confirm_password"
-					    	v-bind:class="{
-						    		'input': true,
-						    		'is-success': !errors.has('confirm register password'),
-						    		'is-danger': errors.has('confirm register password')
-					    		}"
-					    	v-validate="{rules: {required: true, min: 6, confirmed: 'register password'}}"
-					    	name="confirm register password"
-					    	type="password"
-					    	placeholder="Still at least 6 characters">
-					    	<span
-						    	v-show="errors.has('confirm register password')"
-						    	class="help is-danger">
-						    		{{ errors.first('confirm register password') }}
-						    </span>
-					  </p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="columns">
-				<div class="column is-offset-9">
-					<button
-							v-on:click="register()"
-							v-bind:class="{'button is-success' : true, 'is-loading': registerIsLoading}"
-							v-bind:disabled="registerIsDisabled">
-						Register
-						</button>
-				</div>
-			</div>
-		</section>
 		</div>
 	</div>
+
 
 </span></template>
 

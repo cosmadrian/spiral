@@ -25,6 +25,7 @@ app.use('/static', express.static(helpers.getFilePath('static/')))
 app.use('/index.html', express.static(helpers.getFilePath('index.html')))
 app.use('/service-worker.js', express.static(helpers.getFilePath('service-worker.js')))
 
+
 let authenticate = (req, res, next) => {
 	try {
 		if(req.header('authorization') !== undefined) {
